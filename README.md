@@ -1,10 +1,5 @@
 # react-cron-ui
 
-![npm](https://img.shields.io/npm/v/react-cron-ui)
-![license](https://img.shields.io/npm/l/react-cron-ui)
-![React](https://img.shields.io/badge/React-16%2B-blue)
-![Ant Design](https://img.shields.io/badge/Ant%20Design-4-blue)
-
 react-cron-ui 是一个用于方便输入和编辑 cron 表达式的 React 组件。它提供了直观的用户界面，使用户能够轻松创建和修改 cron 表达式。
 
 ![react-cron-ui 预览](https://raw.githubusercontent.com/kelokeloo/react-cron-ui/main/public/demo.jpg)
