@@ -1,0 +1,30 @@
+.react-cron-ui-errorLabel {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.react-cron-ui-tabs {
+  margin-top: 0.5rem !important;
+}
+.react-cron-ui-tabs .ant-tabs-nav {
+  margin-bottom: 0 !important;
+}
+.react-cron-ui-panel {
+  padding: 0.5rem;
+  border: 1px solid #f0f0f0;
+  border-top: 0;
+}
+
+.react-cron-ui-editor {
+  width: 800px;
+}
+
+.react-cron-ui-cron {
+}
+.react-cron-ui-cron .react-cron-ui-input {
+  width: 200px;
+}
+
+.react-cron-ui-btn {
+  margin-left: 8px;
+}
