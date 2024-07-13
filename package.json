@@ -36,7 +36,8 @@
     "typescript": "^5.5.3"
   },
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "test": "echo \"No test specified\" && exit 0"
   },
   "peerDependencies": {
     "antd": "^4.0.0",
