@@ -7,16 +7,14 @@
 
 react-cron-ui 是一个用于方便输入和编辑 cron 表达式的 React 组件。它提供了直观的用户界面，使用户能够轻松创建和修改 cron 表达式。
 
+![react-cron-ui 预览](https://raw.githubusercontent.com/kelokeloo/react-cron-ui/main/public/demo.jpg)
+
 ## 特性
 
 - 简单易用的 cron 表达式输入界面
 - 支持自定义人类可读的 cron 表达式解析
 - 可选显示最近 5 次执行时间
 - 兼容 React 16+ 和 Ant Design 4
-
-## 在线演示
-
-CodeSandbox
 
 ## 安装
 
