@@ -29,6 +29,10 @@ export const CronEditor = (props: Props) => {
 
   useEffect(() => {
     try {
+      if (!defaultValue) {
+        setInnerValue(defaultValidValue);
+        return;
+      }
       const interval = parser.parseExpression(defaultValue);
       if (interval.hasNext()) {
         setInnerValue(defaultValue);
