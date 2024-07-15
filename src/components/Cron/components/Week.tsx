@@ -30,6 +30,19 @@ import {
   OrderWeekValue,
   formatToCronOrderWeekSpecificString,
 } from "../MiniComponents/OrderWeekSpecific";
+import {
+  everyRegex,
+  ignoreRegex,
+  weekIntervalRegex,
+  weekSpecificRegexSingle,
+  weekSpecificRegexMultiple,
+  specificRegexNumbers,
+  rangeRegex,
+  weekRangeStrRegex,
+  lastDayRegex,
+  weekMonthWeekLastDayRegex,
+  weekOrderWeekSpecificRegex,
+} from "../utils/cronParser";
 
 type Props = {
   defaultValue?: string;
@@ -100,29 +113,14 @@ export const Week = (props: Props) => {
   const { registerHandler, getHandler } = useHandlerPool();
 
   const parserMergedValue = (raw: string) => {
-    const everyRegex = /^\*$/; // 匹配全部
-    const ignoreRegex = /^\?$/; // 匹配忽略
-    const intervalRegex = /^(\d+|MON|TUE|WED|THU|FRI|SAT|SUN)\/(\d+)$/; // 匹配间隔
-    const specificRegexSingle = /^(\d+|MON|TUE|WED|THU|FRI|SAT|SUN)$/; // 匹配单个日期的情况
-    const specificRegexMultiple =
-      /^(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN)(,(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN))+$/; // 匹配“,”分隔的日期
-    const specificRegexNumbers = /^(\d+,)*\d+$/; // 匹配“,”分隔的数字
-    const rangeNumRegex = /^(\d+)-(\d+)$/; // 匹配区间格式
-    const rangeStrRegex =
-      /^(MON|TUE|WED|THU|FRI|SAT|SUN)-(MON|TUE|WED|THU|FRI|SAT|SUN)$/; // 匹配字符区间格式
-    const weekLastDayRegex = /^L$/; // 每个星期的最后一天THU
-    const monthWeekLastDayRegex = /^(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN)L$/; // 每个月的最后一个星期几
-    const orderWeekSpecificRegex =
-      /^(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN)#(\d{1,2})$/; // 第几周的星期几
-
     if (everyRegex.test(raw)) {
       defaultSplitValueRef.current.every = everyValue;
       setType(WeekEnum.EVERY);
     } else if (ignoreRegex.test(raw)) {
       defaultSplitValueRef.current.ignore = "?";
       setType(WeekEnum.IGNORE);
-    } else if (intervalRegex.test(raw)) {
-      const match = raw.match(intervalRegex)!;
+    } else if (weekIntervalRegex.test(raw)) {
+      const match = raw.match(weekIntervalRegex)!;
       if (isWeekStr(match[1])) {
         const monthNum = getWeekNum(match[1] as BriefWeek);
         defaultSplitValueRef.current.interval = {
@@ -136,8 +134,8 @@ export const Week = (props: Props) => {
         };
       }
       setType(WeekEnum.INTERVAL);
-    } else if (specificRegexSingle.test(raw)) {
-      const match = raw.match(specificRegexSingle)!;
+    } else if (weekSpecificRegexSingle.test(raw)) {
+      const match = raw.match(weekSpecificRegexSingle)!;
       if (isWeekStr(match[1])) {
         const weekNum = getWeekNum(match[1] as BriefWeek);
         defaultSplitValueRef.current.specific = [weekNum];
@@ -145,7 +143,7 @@ export const Week = (props: Props) => {
         defaultSplitValueRef.current.specific = [Number(match[1])];
       }
       setType(WeekEnum.SPECIFIC);
-    } else if (specificRegexMultiple.test(raw)) {
+    } else if (weekSpecificRegexMultiple.test(raw)) {
       defaultSplitValueRef.current.specific = raw.split(",").map((item) => {
         if (isWeekStr(item)) {
           return getWeekNum(item as BriefWeek);
@@ -159,25 +157,25 @@ export const Week = (props: Props) => {
         .split(",")
         .map((item) => Number(item));
       setType(WeekEnum.SPECIFIC);
-    } else if (rangeNumRegex.test(raw)) {
-      const match = raw.match(rangeNumRegex)!;
+    } else if (rangeRegex.test(raw)) {
+      const match = raw.match(rangeRegex)!;
       defaultSplitValueRef.current.range = {
         min: Number(match[1]),
         max: Number(match[2]),
       };
       setType(WeekEnum.RANGE);
-    } else if (rangeStrRegex.test(raw)) {
-      const match = raw.match(rangeStrRegex)!;
+    } else if (weekRangeStrRegex.test(raw)) {
+      const match = raw.match(weekRangeStrRegex)!;
       defaultSplitValueRef.current.range = {
         min: getWeekNum(match[1] as BriefWeek),
         max: getWeekNum(match[2] as BriefWeek),
       };
       setType(WeekEnum.RANGE);
-    } else if (weekLastDayRegex.test(raw)) {
+    } else if (lastDayRegex.test(raw)) {
       defaultSplitValueRef.current.weekLastDay = "L";
       setType(WeekEnum.WEEK_LAST_DAY);
-    } else if (monthWeekLastDayRegex.test(raw)) {
-      const match = raw.match(monthWeekLastDayRegex)!;
+    } else if (weekMonthWeekLastDayRegex.test(raw)) {
+      const match = raw.match(weekMonthWeekLastDayRegex)!;
       if (isWeekStr(match[1])) {
         defaultSplitValueRef.current.monthWeekLastDay = {
           week: getWeekNum(match[1] as BriefWeek),
@@ -188,8 +186,8 @@ export const Week = (props: Props) => {
         };
       }
       setType(WeekEnum.MONTH_WEEK_LAST_DAY);
-    } else if (orderWeekSpecificRegex.test(raw)) {
-      const match = raw.match(orderWeekSpecificRegex)!;
+    } else if (weekOrderWeekSpecificRegex.test(raw)) {
+      const match = raw.match(weekOrderWeekSpecificRegex)!;
       if (isWeekStr(match[1])) {
         defaultSplitValueRef.current.orderWeekSpecific = {
           order: Number(match[2]),

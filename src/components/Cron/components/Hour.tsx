@@ -17,6 +17,13 @@ import {
 } from "../MiniComponents/Range";
 import { Every, everyValue } from "../MiniComponents/Every";
 import { useHandlerPool, useMergeState } from "../hooks";
+import {
+  everyRegex,
+  intervalRegex,
+  specificRegexNumber,
+  specificRegexNumbers,
+  rangeRegex,
+} from "../utils/cronParser";
 
 type Props = {
   defaultValue?: string;
@@ -71,12 +78,6 @@ export const Hour = (props: Props) => {
   const { registerHandler, getHandler } = useHandlerPool();
 
   const parserMergedValue = (raw: string) => {
-    const everyRegex = /^\*$/; // 匹配全部
-    const intervalRegex = /^(\d+)\/(\d+)$/; // 匹配间隔
-    const specificRegexNumber = /^\d+$/; // 匹配单个数字的情况
-    const specificRegexNumbers = /^(\d+,)*\d+$/; // 匹配“,”分隔的数字
-    const rangeRegex = /^(\d+)-(\d+)$/; // 匹配区间格式
-
     if (everyRegex.test(raw)) {
       defaultSplitValueRef.current.every = everyValue;
       setType(HourEnum.EVERY);

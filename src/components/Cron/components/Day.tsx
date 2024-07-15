@@ -29,6 +29,18 @@ import {
   formatToCronNearestWorkingDayString,
 } from "../MiniComponents/NearestWorkingDay";
 
+import {
+  everyRegex,
+  ignoreRegex,
+  intervalRegex,
+  specificRegexNumber,
+  specificRegexNumbers,
+  rangeRegex,
+  nearestWorkingDayRegex,
+  lastDayRegex,
+  lastWorkingDayRegex,
+} from "../utils/cronParser";
+
 type Props = {
   defaultValue?: string;
   value?: string;
@@ -96,16 +108,6 @@ export const Day = (props: Props) => {
   const { registerHandler, getHandler } = useHandlerPool();
 
   const parserMergedValue = (raw: string) => {
-    const everyRegex = /^\*$/; // 匹配全部
-    const ignoreRegex = /^\?$/; // 匹配忽略
-    const intervalRegex = /^(\d+)\/(\d+)$/; // 匹配间隔
-    const specificRegexNumber = /^\d+$/; // 匹配单个数字的情况
-    const specificRegexNumbers = /^(\d+,)*\d+$/; // 匹配“,”分隔的数字
-    const rangeRegex = /^(\d+)-(\d+)$/; // 匹配区间格式
-    const nearestWorkingDayRegex = /^(\d+)W$/; // 匹配最近的工作日
-    const lastDayRegex = /^L$/; // 匹配最后一天
-    const lastWorkingDayRegex = /^LW$/; // 匹配最后一个工作日
-
     if (everyRegex.test(raw)) {
       defaultSplitValueRef.current.every = everyValue;
       setType(DayEnum.EVERY);

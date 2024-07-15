@@ -1,30 +1,31 @@
 import { isString } from "lodash";
 
-const everyRule = /^\*$/; // 匹配全部
-const intervalRule = /^(\d+)\/(\d+)$/; // 匹配间隔
-const specificRegexNumber = /^\d+$/; // 匹配单个数字的情况
-const specificRegexNumbers = /^(\d+,)*\d+$/; // 匹配“,”分隔的数字
-const rangeRegex = /^(\d+)-(\d+)$/; // 匹配区间格式
-const ignoreRegex = /^\?$/; // 匹配忽略
-const nearestWorkingDayRegex = /^(\d+)W$/; // 匹配最近的工作日
-const lastDayRegex = /^L$/; // 匹配最后一天
-const lastWorkingDayRegex = /^LW$/; // 匹配最后一个工作日
-const monthIntervalRegex =
+export const everyRegex = /^\*$/; // 匹配全部
+export const intervalRegex = /^(\d+)\/(\d+)$/; // 匹配间隔
+export const specificRegexNumber = /^\d+$/; // 匹配单个数字的情况
+export const specificRegexNumbers = /^(\d+,)*\d+$/; // 匹配“,”分隔的数字
+export const rangeRegex = /^(\d+)-(\d+)$/; // 匹配区间格式
+export const ignoreRegex = /^\?$/; // 匹配忽略
+export const nearestWorkingDayRegex = /^(\d+)W$/; // 匹配最近的工作日
+export const lastDayRegex = /^L$/; // 匹配最后一天
+export const lastWorkingDayRegex = /^LW$/; // 匹配最后一个工作日
+export const monthIntervalRegex =
   /^(\d+|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)\/(\d+)$/;
-const monthSpecificRegexSingle =
+export const monthSpecificRegexSingle =
   /^(\d+|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)$/;
-const monthSpecificRegexMultiple =
+export const monthSpecificRegexMultiple =
   /^(\d{1,2}|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(,(\d{1,2}|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC))$/;
-const monthRangeStrRegex =
+export const monthRangeStrRegex =
   /^(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)-(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)$/;
-const weekIntervalRegex = /^(\d+|MON|TUE|WED|THU|FRI|SAT|SUN)\/(\d+)$/;
-const weekSpecificRegexSingle = /^(\d+|MON|TUE|WED|THU|FRI|SAT|SUN)$/;
-const weekSpecificRegexMultiple =
+export const weekIntervalRegex = /^(\d+|MON|TUE|WED|THU|FRI|SAT|SUN)\/(\d+)$/;
+export const weekSpecificRegexSingle = /^(\d+|MON|TUE|WED|THU|FRI|SAT|SUN)$/;
+export const weekSpecificRegexMultiple =
   /^(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN)(,(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN))$/;
-const weekRangeStrRegex =
+export const weekRangeStrRegex =
   /^(MON|TUE|WED|THU|FRI|SAT|SUN)-(MON|TUE|WED|THU|FRI|SAT|SUN)$/;
-const weekMonthWeekLastDayRegex = /^(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN)L$/;
-const weekOrderWeekSpecificRegex =
+export const weekMonthWeekLastDayRegex =
+  /^(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN)L$/;
+export const weekOrderWeekSpecificRegex =
   /^(\d{1,2}|MON|TUE|WED|THU|FRI|SAT|SUN)#(\d{1,2})$/;
 
 abstract class Unit {
@@ -39,8 +40,8 @@ class SecondUnit extends Unit {
   validate() {
     const expressSplit = this._expressSplit;
     return (
-      everyRule.test(expressSplit) ||
-      intervalRule.test(expressSplit) ||
+      everyRegex.test(expressSplit) ||
+      intervalRegex.test(expressSplit) ||
       specificRegexNumber.test(expressSplit) ||
       specificRegexNumbers.test(expressSplit) ||
       rangeRegex.test(expressSplit)
@@ -52,8 +53,8 @@ class MinuteUnit extends Unit {
   validate() {
     const expressSplit = this._expressSplit;
     return (
-      everyRule.test(expressSplit) ||
-      intervalRule.test(expressSplit) ||
+      everyRegex.test(expressSplit) ||
+      intervalRegex.test(expressSplit) ||
       specificRegexNumber.test(expressSplit) ||
       specificRegexNumbers.test(expressSplit) ||
       rangeRegex.test(expressSplit)
@@ -64,8 +65,8 @@ class HourUnit extends Unit {
   validate() {
     const expressSplit = this._expressSplit;
     return (
-      everyRule.test(expressSplit) ||
-      intervalRule.test(expressSplit) ||
+      everyRegex.test(expressSplit) ||
+      intervalRegex.test(expressSplit) ||
       specificRegexNumber.test(expressSplit) ||
       specificRegexNumbers.test(expressSplit) ||
       rangeRegex.test(expressSplit)
@@ -77,8 +78,8 @@ class DayUnit extends Unit {
   validate() {
     const expressSplit = this._expressSplit;
     return (
-      everyRule.test(expressSplit) ||
-      intervalRule.test(expressSplit) ||
+      everyRegex.test(expressSplit) ||
+      intervalRegex.test(expressSplit) ||
       specificRegexNumber.test(expressSplit) ||
       specificRegexNumbers.test(expressSplit) ||
       rangeRegex.test(expressSplit) ||
@@ -94,7 +95,7 @@ class MonthUnit extends Unit {
   validate() {
     const expressSplit = this._expressSplit;
     return (
-      everyRule.test(expressSplit) ||
+      everyRegex.test(expressSplit) ||
       monthIntervalRegex.test(expressSplit) ||
       monthSpecificRegexSingle.test(expressSplit) ||
       monthSpecificRegexMultiple.test(expressSplit) ||
@@ -108,7 +109,7 @@ class WeekUnit extends Unit {
   validate() {
     const express = this._expressSplit;
     return (
-      everyRule.test(express) ||
+      everyRegex.test(express) ||
       ignoreRegex.test(express) ||
       weekIntervalRegex.test(express) ||
       weekSpecificRegexSingle.test(express) ||
