@@ -43,8 +43,10 @@ import {
   weekMonthWeekLastDayRegex,
   weekOrderWeekSpecificRegex,
 } from "../utils/cronParser";
+import { SunStartIndex } from "..";
 
 type Props = {
+  sunStartIndex: SunStartIndex;
   defaultValue?: string;
   value?: string;
   onChange?: (value: string) => void;
@@ -74,7 +76,7 @@ export type InnerValue = {
 
 const unit = UnitEnum.Week;
 export const Week = (props: Props) => {
-  const { defaultValue, value: propsValue, onChange } = props;
+  const { sunStartIndex, defaultValue, value: propsValue, onChange } = props;
 
   const [mergedValue, setValue] = useMergeState(everyValue, {
     value: propsValue,
@@ -89,25 +91,29 @@ export const Week = (props: Props) => {
   }
 
   const [type, setType] = useState<WeekEnum>(WeekEnum.EVERY);
+  const min =
+    sunStartIndex === SunStartIndex.Zero
+      ? UnitRange[unit].min
+      : UnitRange[unit].min + 1;
   const defaultSplitValueRef = useRef<InnerValue>({
     every: everyValue,
     ignore: ignoreValue,
     interval: {
-      weekStart: UnitRange[unit].min,
+      weekStart: min,
       weekInterval: 1,
     },
-    specific: [UnitRange[unit].min],
+    specific: [min],
     range: {
-      min: UnitRange[unit].min,
-      max: UnitRange[unit].min + 1,
+      min: min,
+      max: min + 1,
     },
     weekLastDay: weekLastDayValue,
     monthWeekLastDay: {
-      week: UnitRange[unit].min,
+      week: min,
     },
     orderWeekSpecific: {
       order: 1,
-      week: UnitRange[unit].min,
+      week: min,
     },
   });
   const { registerHandler, getHandler } = useHandlerPool();
@@ -251,6 +257,7 @@ export const Week = (props: Props) => {
       label: "区间",
       component: (
         <WeekRange
+          sunStartIndex={sunStartIndex}
           ref={(refObj) => {
             if (refObj) {
               registerHandler(WeekEnum.RANGE, refObj.getValue);
@@ -270,6 +277,7 @@ export const Week = (props: Props) => {
       label: "间隔",
       component: (
         <WeekInterval
+          sunStartIndex={sunStartIndex}
           ref={(refObj) => {
             if (refObj) {
               registerHandler(WeekEnum.INTERVAL, refObj.getValue);
@@ -289,6 +297,7 @@ export const Week = (props: Props) => {
       label: "指定",
       component: (
         <WeekSpecific
+          sunStartIndex={sunStartIndex}
           ref={(refObj) => {
             if (refObj) {
               registerHandler(WeekEnum.SPECIFIC, refObj.getValue);
@@ -326,6 +335,7 @@ export const Week = (props: Props) => {
       label: "每月最后一个星期几",
       component: (
         <MonthWeekLastDay
+          sunStartIndex={sunStartIndex}
           ref={(refObj) => {
             if (refObj) {
               registerHandler(WeekEnum.MONTH_WEEK_LAST_DAY, refObj.getValue);
@@ -347,6 +357,7 @@ export const Week = (props: Props) => {
       label: "顺序",
       component: (
         <OrderWeekSpecific
+          sunStartIndex={sunStartIndex}
           ref={(refObj) => {
             if (refObj) {
               registerHandler(WeekEnum.ORDER_WEEK_SPECIFIC, refObj.getValue);

@@ -1,9 +1,15 @@
 import React, { forwardRef, useImperativeHandle } from "react";
-import { UnitEnum, UnitRange, weekOptions } from "../constants";
+import {
+  UnitEnum,
+  UnitRange,
+  weekOptions_One,
+  weekOptions_Zero,
+} from "../constants";
 import { InputNumber, Select, Space } from "antd";
 import "../style/index.css";
 import { Ref } from "./interface";
 import { useMergeState } from "../hooks";
+import { SunStartIndex } from "..";
 
 export type OrderWeekValue = {
   order: number; // 第几周
@@ -11,6 +17,7 @@ export type OrderWeekValue = {
 };
 
 type Props = {
+  sunStartIndex: SunStartIndex;
   unit: UnitEnum;
   value?: OrderWeekValue;
   defaultValue?: OrderWeekValue;
@@ -22,7 +29,13 @@ export const formatToCronOrderWeekSpecificString = (
   return `${orderWeekSpecificValue.week}#${orderWeekSpecificValue.order}`;
 };
 export const OrderWeekSpecific = forwardRef<Ref, Props>((props, ref) => {
-  const { unit, value: propsValue, defaultValue, onChange } = props;
+  const {
+    sunStartIndex,
+    unit,
+    value: propsValue,
+    defaultValue,
+    onChange,
+  } = props;
   const [mergedValue, setValue] = useMergeState(
     { order: 1, week: UnitRange[unit].min },
     { value: propsValue, defaultValue }
@@ -73,7 +86,11 @@ export const OrderWeekSpecific = forwardRef<Ref, Props>((props, ref) => {
             e.stopPropagation();
             e.preventDefault();
           }}
-          options={weekOptions}
+          options={
+            sunStartIndex === SunStartIndex.Zero
+              ? weekOptions_Zero
+              : weekOptions_One
+          }
           onChange={(value) => {
             changeMergedValue({
               order: mergedValue.order,

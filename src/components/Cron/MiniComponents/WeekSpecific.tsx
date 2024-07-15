@@ -1,11 +1,18 @@
 import React, { forwardRef, useImperativeHandle } from "react";
-import { UnitEnum, UnitRange, weekOptions } from "../constants";
+import {
+  UnitEnum,
+  UnitRange,
+  weekOptions_One,
+  weekOptions_Zero,
+} from "../constants";
 import { Checkbox } from "antd";
 import "../style/index.css";
 import { Ref } from "./interface";
 import { useMergeState } from "../hooks";
+import { SunStartIndex } from "..";
 
 type Props = {
+  sunStartIndex: SunStartIndex;
   unit: UnitEnum;
   defaultValue?: number[];
   value?: number[];
@@ -16,7 +23,13 @@ export const formatToCronWeekSpecificString = (specificValue: number[]) => {
 };
 
 export const WeekSpecific = forwardRef<Ref, Props>((props, ref) => {
-  const { unit, value: propsValue, defaultValue, onChange } = props;
+  const {
+    sunStartIndex,
+    unit,
+    value: propsValue,
+    defaultValue,
+    onChange,
+  } = props;
   const [mergedValue, setValue] = useMergeState([UnitRange[unit].min], {
     value: propsValue,
     defaultValue,
@@ -47,7 +60,10 @@ export const WeekSpecific = forwardRef<Ref, Props>((props, ref) => {
         }}
       >
         <span style={{ marginRight: "8px" }}>在星期</span>
-        {weekOptions.map((item) => {
+        {(sunStartIndex === SunStartIndex.Zero
+          ? weekOptions_Zero
+          : weekOptions_One
+        ).map((item) => {
           return (
             <Checkbox
               style={{

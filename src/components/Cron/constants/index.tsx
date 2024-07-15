@@ -67,7 +67,7 @@ export const BriefWeekMap = {
   SAT: 7,
 };
 
-export const weekOptions = [
+export const weekOptions_Zero = [
   {
     label: "日",
     value: 0,
@@ -95,6 +95,36 @@ export const weekOptions = [
   {
     label: "六",
     value: 6,
+  },
+];
+export const weekOptions_One = [
+  {
+    label: "日",
+    value: 1,
+  },
+  {
+    label: "一",
+    value: 2,
+  },
+  {
+    label: "二",
+    value: 3,
+  },
+  {
+    label: "三",
+    value: 4,
+  },
+  {
+    label: "四",
+    value: 5,
+  },
+  {
+    label: "五",
+    value: 6,
+  },
+  {
+    label: "六",
+    value: 7,
   },
 ];
 

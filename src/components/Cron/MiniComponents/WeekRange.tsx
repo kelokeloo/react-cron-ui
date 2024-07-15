@@ -1,11 +1,13 @@
 import { Select, Space } from "antd";
 import React, { forwardRef, useImperativeHandle } from "react";
-import { UnitEnum, weekOptions } from "../constants";
+import { UnitEnum, weekOptions_One, weekOptions_Zero } from "../constants";
 import "../style/index.css";
 import { Ref } from "./interface";
 import { useMergeState } from "../hooks";
+import { SunStartIndex } from "..";
 
 type Props = {
+  sunStartIndex: SunStartIndex;
   unit: UnitEnum;
   defaultValue?: RangeValue;
   value?: RangeValue;
@@ -21,7 +23,13 @@ export const formatToCronWeekRangeString = (rangeValue: RangeValue) => {
 };
 
 export const WeekRange = forwardRef<Ref, Props>((props, ref) => {
-  const { unit, value: propsValue, defaultValue, onChange } = props;
+  const {
+    sunStartIndex,
+    unit,
+    value: propsValue,
+    defaultValue,
+    onChange,
+  } = props;
   const [mergedValue, setValue] = useMergeState(
     { min: 0, max: 1 },
     { value: propsValue, defaultValue }
@@ -71,7 +79,11 @@ export const WeekRange = forwardRef<Ref, Props>((props, ref) => {
             e.stopPropagation();
             e.preventDefault();
           }}
-          options={weekOptions}
+          options={
+            sunStartIndex === SunStartIndex.Zero
+              ? weekOptions_Zero
+              : weekOptions_One
+          }
           onChange={(value) => {
             changeMergedValue({ min: Number(value), max: mergedValue.max });
           }}
@@ -90,7 +102,11 @@ export const WeekRange = forwardRef<Ref, Props>((props, ref) => {
             e.stopPropagation();
             e.preventDefault();
           }}
-          options={weekOptions}
+          options={
+            sunStartIndex === SunStartIndex.Zero
+              ? weekOptions_Zero
+              : weekOptions_One
+          }
           onChange={(value) => {
             changeMergedValue({ min: mergedValue.min, max: Number(value) });
           }}

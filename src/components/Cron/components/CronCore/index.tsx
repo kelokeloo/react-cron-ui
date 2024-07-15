@@ -8,14 +8,21 @@ import { Day } from "../Day";
 import { Month } from "../Month";
 import { Week } from "../Week";
 import { getUnitIndex } from "../../utils";
+import { SunStartIndex } from "../..";
 
 type Props = {
+  sunStartIndex: SunStartIndex;
   humanReadableParser: (cronExpress: string) => string;
   value: string;
   onChange: (value: string) => void;
 };
 export const CronCore = (props: Props) => {
-  const { humanReadableParser, value: cronExpress, onChange } = props;
+  const {
+    sunStartIndex,
+    humanReadableParser,
+    value: cronExpress,
+    onChange,
+  } = props;
   const { second, minute, hour, day, month, week, year } = useMemo(() => {
     const cronPiece = cronExpress.split(" ");
     return {
@@ -125,6 +132,7 @@ export const CronCore = (props: Props) => {
         <Tabs.TabPane tab={unitLabels[UnitEnum.Week]} key={UnitEnum.Week}>
           <div className="react-cron-ui-panel">
             <Week
+              sunStartIndex={sunStartIndex}
               value={week}
               onChange={(value) => {
                 handleWeekUnitChange(value);

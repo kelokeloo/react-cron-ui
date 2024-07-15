@@ -1,10 +1,18 @@
 import { InputNumber, Select, Space } from "antd";
 import React, { forwardRef, useImperativeHandle } from "react";
-import { BriefWeek, UnitEnum, UnitRange, weekOptions } from "../constants";
+import {
+  BriefWeek,
+  UnitEnum,
+  UnitRange,
+  weekOptions_One,
+  weekOptions_Zero,
+} from "../constants";
 import { Ref } from "./interface";
 import { useMergeState } from "../hooks";
+import { SunStartIndex } from "..";
 
 type Props = {
+  sunStartIndex: SunStartIndex;
   unit: UnitEnum;
   defaultValue?: IntervalValue;
   value?: IntervalValue;
@@ -22,7 +30,13 @@ export const formatToCronWeekIntervalString = (
 };
 
 export const WeekInterval = forwardRef<Ref, Props>((props, ref) => {
-  const { unit, value: propsValue, defaultValue, onChange } = props;
+  const {
+    sunStartIndex,
+    unit,
+    value: propsValue,
+    defaultValue,
+    onChange,
+  } = props;
   const [mergedValue, setValue] = useMergeState(
     { weekStart: 0, weekInterval: 1 },
     { value: propsValue, defaultValue }
@@ -56,7 +70,11 @@ export const WeekInterval = forwardRef<Ref, Props>((props, ref) => {
           e.stopPropagation();
           e.preventDefault();
         }}
-        options={weekOptions}
+        options={
+          sunStartIndex === SunStartIndex.Zero
+            ? weekOptions_Zero
+            : weekOptions_One
+        }
         onChange={(value) => {
           changeMergedValue({
             weekStart: value,

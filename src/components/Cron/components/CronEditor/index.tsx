@@ -7,8 +7,10 @@ import { CronCore } from "../CronCore";
 import "../../style/index.css";
 import React, { useEffect, useState } from "react";
 import { CronExpress } from "../../utils/cronParser";
+import { SunStartIndex } from "../..";
 
 type Props = {
+  sunStartIndex: SunStartIndex;
   humanReadableParser: (cronExpress: string) => string;
   defaultValue?: string;
   onCancel: () => void;
@@ -19,6 +21,7 @@ export const defaultValidValue = "* * * * * *";
 
 export const CronEditor = (props: Props) => {
   const {
+    sunStartIndex,
     humanReadableParser,
     defaultValue = defaultValidValue,
     onCancel,
@@ -48,6 +51,7 @@ export const CronEditor = (props: Props) => {
   return (
     <div className="react-cron-ui-editor">
       <CronCore
+        sunStartIndex={sunStartIndex}
         humanReadableParser={humanReadableParser}
         value={innerValue}
         onChange={(value) => {
