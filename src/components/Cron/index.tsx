@@ -8,22 +8,33 @@ import "./style/index.css";
 import cronstrue from "cronstrue";
 import "cronstrue/locales/zh_CN";
 
-export const defaultHumanReadableParser = (cronExpress: string) => {
+export const inner_humanReadableParser = (
+  cronExpress: string,
+  weekStart: SunStartIndex
+) => {
   return cronstrue.toString(cronExpress, {
     locale: "zh_CN",
+    dayOfWeekStartIndexZero: weekStart === SunStartIndex.Zero ? true : false,
   });
 };
+
+export enum SunStartIndex {
+  Zero = 0,
+  One = 1,
+}
 export type Props = {
   showResult?: boolean; // 是否显示最近5次执行时间的按钮
   humanReadableParser?: (cronExpress: string) => string;
   defaultValue?: string;
   value?: string;
+  sunStartIndex?: SunStartIndex;
   onChange?: (value: string) => void;
 };
 export const Cron = (props: Props) => {
   const {
     showResult = true,
-    humanReadableParser = defaultHumanReadableParser,
+    humanReadableParser: propsHumanReadableParser,
+    sunStartIndex = SunStartIndex.Zero,
     value: propsValue,
     defaultValue,
     onChange,
@@ -45,6 +56,14 @@ export const Cron = (props: Props) => {
   };
   const closeEditor = () => {
     setIsEditorOpen(false);
+  };
+
+  const humanReadableParser = (cronExpress: string) => {
+    if (propsHumanReadableParser) {
+      return propsHumanReadableParser(cronExpress);
+    } else {
+      return inner_humanReadableParser(cronExpress, sunStartIndex);
+    }
   };
 
   return (
