@@ -45,14 +45,14 @@ export default App;
 
 ### Cron 组件属性 (CronProps)
 
-|        属性         |              类型               |       默认值       |                                  描述                                  |
-| :-----------------: | :-----------------------------: | :----------------: | :--------------------------------------------------------------------: |
-|     showResult      |             boolean             |        true        |                    是否显示最近 5 次执行时间的按钮                     |
-| humanReadableParser | (cronExpress: string) => string |         -          |                  自定义 cron 表达式的人类可读解析函数                  |
-|    defaultValue     |             string              |         -          |                          默认的 cron 表达式值                          |
-|        value        |             string              |         -          |                    当前的 cron 表达式值（受控模式）                    |
-|      onChange       |     (value: string) => void     |         -          |                      cron 表达式变化时的回调函数                       |
-|    sunStartIndex    |          SunStartIndex          | SunStartIndex.Zero | SunStartIndex 可从组件导出，默认周从 0 开始，也就是 SunStartIndex.Zero |
+|        属性         |              类型               |       默认值       |                                                                  描述                                                                   |
+| :-----------------: | :-----------------------------: | :----------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
+|     showResult      |             boolean             |        true        | 是否显示最近 5 次执行时间的按钮,需要注意的是，这里的结果只在 SunStartIndex.Zero 下有效，因此 SunStartIndex.One 的情况下需要关闭这个功能 |
+| humanReadableParser | (cronExpress: string) => string |         -          |                                                  自定义 cron 表达式的人类可读解析函数                                                   |
+|    defaultValue     |             string              |         -          |                                                          默认的 cron 表达式值                                                           |
+|        value        |             string              |         -          |                                                    当前的 cron 表达式值（受控模式）                                                     |
+|      onChange       |     (value: string) => void     |         -          |                                                       cron 表达式变化时的回调函数                                                       |
+|    sunStartIndex    |          SunStartIndex          | SunStartIndex.Zero |                        设置周的开始索引，SunStartIndex 可从组件导出，默认周从 0 开始，也就是 SunStartIndex.Zero                         |
 
 ### 其他导出
 

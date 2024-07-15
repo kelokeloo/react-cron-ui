@@ -1,6 +1,6 @@
 {
   "name": "react-cron-ui",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
@@ -10,6 +10,13 @@
     "cronstrue": "^2.50.0",
     "dayjs": "^1.11.11",
     "lodash": "^4.17.21"
+  },
+  "bugs": {
+    "url": "https://github.com/kelokeloo/react-cron-ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kelokeloo/react-cron-ui"
   },
   "files": [
     "dist",
@@ -43,5 +50,15 @@
     "antd": "^4.0.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
-  }
+  },
+  "keywords": [
+    "cron",
+    "component",
+    "design",
+    "framework",
+    "frontend",
+    "react",
+    "react-component",
+    "ui"
+  ]
 }
