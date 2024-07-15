@@ -206,7 +206,7 @@ export const Hour = (props: Props) => {
         <Space direction="vertical" style={{ display: "flex" }}>
           {radioInfoList.map((item) => {
             return (
-              <div>
+              <div key={item.key}>
                 <Radio value={item.key}>
                   <div
                     style={{
