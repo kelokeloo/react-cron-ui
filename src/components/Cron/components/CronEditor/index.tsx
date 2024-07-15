@@ -6,7 +6,7 @@ import { Button, Space } from "antd";
 import { CronCore } from "../CronCore";
 import "../../style/index.css";
 import React, { useEffect, useState } from "react";
-import parser from "cron-parser";
+import { CronExpress } from "../../utils/cronParser";
 
 type Props = {
   humanReadableParser: (cronExpress: string) => string;
@@ -33,8 +33,8 @@ export const CronEditor = (props: Props) => {
         setInnerValue(defaultValidValue);
         return;
       }
-      const interval = parser.parseExpression(defaultValue);
-      if (interval.hasNext()) {
+      const cronExpress = new CronExpress(defaultValue);
+      if (cronExpress.validate()) {
         setInnerValue(defaultValue);
       } else {
         setInnerValue(defaultValidValue);
