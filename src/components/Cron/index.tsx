@@ -12,10 +12,14 @@ export const inner_humanReadableParser = (
   cronExpress: string,
   weekStart: SunStartIndex
 ) => {
-  return cronstrue.toString(cronExpress, {
-    locale: "zh_CN",
-    dayOfWeekStartIndexZero: weekStart === SunStartIndex.Zero ? true : false,
-  });
+  try {
+    return cronstrue.toString(cronExpress, {
+      locale: "zh_CN",
+      dayOfWeekStartIndexZero: weekStart === SunStartIndex.Zero ? true : false,
+    });
+  } catch (error) {
+    return error as string;
+  }
 };
 
 export enum SunStartIndex {
@@ -80,6 +84,7 @@ export const Cron = (props: Props) => {
         visible={isEditorOpen}
         content={
           <CronEditor
+            sunStartIndex={sunStartIndex}
             humanReadableParser={humanReadableParser}
             defaultValue={mergedValue}
             onCancel={() => {
